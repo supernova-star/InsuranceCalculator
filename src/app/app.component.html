@@ -1,0 +1,56 @@
+<div class = 'container header'>    
+	<span id = 'title'>{{LABELS.TITLE}}</span>    
+	<span>{{LABELS.SLIDER_COMMENT}}</span>
+</div>
+<div class = 'container body'>    
+	<div class="flex-item"></div>    
+	<div class = 'flex-item'>        
+		<form name = "sliderForm" #f = "ngForm" (ngSubmit) = "onSubmit(f)" novalidate>            
+			<div class = 'slider1 form-group'>
+				<label>{{LABELS.DESIRED_REPLACEMENT}} <i class="fa fa-exclamation-circle" placement="right" ngbTooltip="Tooltip on right"></i></label>                
+				<input type="text" name = "desired" #desired="ngModel" required [ngModel]="model.desired | currency:'USD':true" class="form-control inputform" (ngModelChange)="model.desired=currencyInputChanged($event)" (input)="inputValidator($event)" [ngClass]="{ 'is-invalid': f.submitted && desired.invalid }">                <label class='new'>/month</label>            
+			</div>            
+			<div class = 'slider form-group'>
+				<label>{{LABELS.HEALTHCARE_EXPENSE}} <i class="fa fa-exclamation-circle" placement="right" ngbTooltip="Tooltip on right"></i></label>                
+				<input type="text" name = "healthcare" #healthcare="ngModel" required [ngModel]="model.healthcare | currency:'USD':true" class="form-control inputform" (ngModelChange)="model.healthcare=currencyInputChanged($event)" (input)="inputValidator($event)" [ngClass]="{ 'is-invalid': f.submitted && healthcare.invalid }">            
+			</div>            
+			<div class = 'slider form-group'>
+				<label>{{LABELS.HOME_MODIFICATION}} <i class="fa fa-exclamation-circle" placement="right" ngbTooltip="Tooltip on right"></i></label>                
+				<input type="text" name = "home_modification" #home_modification="ngModel" required [ngModel]="model.home_modification | currency:'USD':true" class="form-control inputform" (ngModelChange)="model.home_modification=currencyInputChanged($event)" (input)="inputValidator($event)" [ngClass]="{ 'is-invalid': f.submitted && home_modification.invalid }">            
+			</div>
+			<div class = 'slider1 form-group'>
+				<label>{{LABELS.MEDICAL_HOMECARE}} <i class="fa fa-exclamation-circle" placement="right" ngbTooltip="Tooltip on right"></i></label>                
+				<input type="text" name = "homecare" #homecare="ngModel" required [ngModel]="model.homecare | currency:'USD':true" class="form-control inputform" (ngModelChange)="model.homecare=currencyInputChanged($event)" (input)="inputValidator($event)" [ngClass]="{ 'is-invalid': f.submitted && homecare.invalid }">                <label class='new'>/month</label>            
+			</div>            
+			<div class = 'slider1 form-group'>
+				<label>{{LABELS.OTHER_EXPENSE}} <i class="fa fa-exclamation-circle" placement="right" ngbTooltip="Tooltip on right"></i></label>                
+				<input type="text" name = "others" #others="ngModel" required [ngModel]="model.others | currency:'USD':true" class="form-control inputform" (ngModelChange)="model.others=currencyInputChanged($event)" (input)="inputValidator($event)" [ngClass]="{ 'is-invalid': f.submitted && others.invalid }">                <label class='new'>/month</label>            
+			</div>            
+			<!-- <div>{{onSubmit(f)}}</div> -->            
+			<div class="form-group">
+				<button class="btn btn-primary">{{LABELS.START}}</button>            
+			</div>        
+		</form>    
+	</div>    
+	<div class='flex-item'></div>    
+	<div class = 'flex-item'>        
+		<div class = 'recovery'>
+			<label>Recovery Period <i class="fa fa-exclamation-circle" placement="right" ngbTooltip="Tooltip on right"></i></label>            
+			<input class='inputform1' type="text" [(ngModel)] = "recoveryPeriod" (input)="inputValidator($event)">            <label class='new1'>months</label>        
+		</div>        
+		<div class="control-section" *ngIf = 'submitted'>            
+			<ejs-chart style='display:block;' [chartArea]='chartArea' [height]='height' [width]='width' align='center' id='chartcontainer' [primaryXAxis]='primaryXAxis'                
+				[primaryYAxis]='primaryYAxis'  [tooltip]='tooltip'  (load)='load($event)'>
+				<e-series-collection>                    
+					<e-series [dataSource]='data' type='Column' xName='x' yName='y' name={{CHART.E_SERIES_NAME}} width=2 [marker]='marker'>
+					</e-series>                
+				</e-series-collection>            
+			</ejs-chart>            
+			<div>
+				A serious illness with recovery lasting <span class ="blue">{{recoveryPeriod}} months</span> could put your <br>                
+				finances down by <span class ="blue">${{estimated_today}}</span> today and by <span class ="blue">${{estimated_10years}}</span> in 10 years.
+			</div>        
+		</div>    
+	</div>    
+	<div class='flex-item'></div>
+</div>
